@@ -42,7 +42,8 @@ import os
 dataFileList = ["election_data_1.csv","election_data_2.csv"]
 
 for file in dataFileList:
-    #assumes data files exist in the same level as this script
+    #assumes data files exist in the directory raw_data which is at the same level
+    #as the script
     csvpath = os.path.join("raw_data",file)
     print(csvpath)
     import csv

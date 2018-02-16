@@ -85,6 +85,8 @@ import os
 dataFileList = ["employee_data1.csv","employee_data2.csv"]
 
 for file in dataFileList:
+    #assumes data files exist in the directory raw_data which is at the same level
+    #as the script
     csvpath = os.path.join("raw_data",file)
     
     #output file with formatted data

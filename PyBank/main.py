@@ -39,7 +39,8 @@ import os
 #list of data files that you can add more to if required
 fileList = ["budget_data_1.csv","budget_data_2.csv"]
 for file in fileList:
-    #assumes data files exist in the same level as the script
+    #assumes data files exist in the directory raw_data which is at the same level
+    #as the script
     csvpath = os.path.join("raw_data",file)
     #print(csvpath)
     import csv
