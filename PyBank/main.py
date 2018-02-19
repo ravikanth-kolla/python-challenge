@@ -45,25 +45,28 @@ for file in fileList:
     #print(csvpath)
     import csv
     with open(csvpath, newline='') as csvfile:
-        #skip the header row
-        csvfile.readline()
-
+        
         # CSV reader specifies delimiter and variable that holds contents
         csvreader = csv.reader(csvfile, delimiter=',')
-
+        #skip the header row
+        next(csvreader)
+        
         totalMonths = 0
         totalRevenue = 0
         prevRevenue = 0
         greatestRevIncAmt = 0
         greatestRevDecAmt = 0
+        totalRevenueChange = 0
 
         #  Each row is read as a row
         for row in csvreader:
             #print(row)
             totalRevenue = totalRevenue + int(row[1])
             totalMonths = totalMonths +1
-            revIncrease = int(row[1]) - prevRevenue
-            totalRevenueChange = totalRevenueChange + revIncrease
+            #skip the first month for revenue change
+            if totalMonths > 1:
+                revIncrease = int(row[1]) - prevRevenue
+                totalRevenueChange = totalRevenueChange + revIncrease
             prevRevenue =  int(row[1])
             if(revIncrease > greatestRevIncAmt):
                 greatestRevIncAmt = revIncrease
@@ -73,8 +76,8 @@ for file in fileList:
                 greatestRevDecAmt = revIncrease
                 greatestRevDecDate = row[0]
 
-
-    avgRevenueChange = round(totalRevenueChange/totalMonths,2)
+    #When calculating the average revenue change the intervals is one less than total months
+    avgRevenueChange = round(totalRevenueChange/(totalMonths-1),2)
 
    #create and open output file to write resuts to
     outputpath = os.path.join("raw_data",file.split(".")[0] + "_Results.txt")
