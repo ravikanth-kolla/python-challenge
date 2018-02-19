@@ -22,14 +22,7 @@
 # Greatest Decrease in Revenue: Aug-12 ($-652794)
 # =============================================================================
 
-totalMonths = 0
-totalRevenue = 0
-avgRevenueChange = 0
-greatestRevIncDate = "Date1"
-greatestRevIncAmt = 0
-greatestRevDecDate = "Date2"
-greatestRevDecAmt = 0
-totalRevenueChange = 0
+
 
 
 # First we'll import the os module 
@@ -38,7 +31,20 @@ import os
 
 #list of data files that you can add more to if required
 fileList = ["budget_data_1.csv","budget_data_2.csv"]
+
+
 for file in fileList:
+    #reset all the values
+    totalMonths = 0
+    totalRevenue = 0
+    avgRevenueChange = 0
+    greatestRevIncDate = ""
+    greatestRevIncAmt = 0
+    greatestRevDecDate = ""
+    greatestRevDecAmt = 0
+    totalRevenueChange = 0
+    prevRevenue = 0
+    revIncrease = 0
     #assumes data files exist in the directory raw_data which is at the same level
     #as the script
     csvpath = os.path.join("raw_data",file)
@@ -51,12 +57,7 @@ for file in fileList:
         #skip the header row
         next(csvreader)
         
-        totalMonths = 0
-        totalRevenue = 0
-        prevRevenue = 0
-        greatestRevIncAmt = 0
-        greatestRevDecAmt = 0
-        totalRevenueChange = 0
+        
 
         #  Each row is read as a row
         for row in csvreader:
