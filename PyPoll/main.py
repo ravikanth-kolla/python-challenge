@@ -30,9 +30,7 @@
 # without massive re-writes). In addition, your final script should both print the analysis to 
 # the terminal and export a text file with the results.
 
-totalVotes = 0
-candidateList = []
-voteCountList = []
+
 
 # First we'll import the os module 
 # This will allow us to create file paths across operating systems
@@ -52,7 +50,11 @@ for file in dataFileList:
 
         # CSV reader specifies delimiter and variable that holds contents
         csvreader = csv.reader(csvfile, delimiter=',')
-
+        #Reset values
+        totalVotes = 0
+        candidateList = []
+        voteCountList = []
+        
         #skip the header row
         next(csvreader)
         #  Each row is read as a row
