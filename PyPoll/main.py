@@ -42,20 +42,22 @@ import os
 dataFileList = ["election_data_1.csv","election_data_2.csv"]
 
 for file in dataFileList:
-    #assumes data files exist in the directory raw_data which is at the same level
-    #as the script
-    csvpath = os.path.join("raw_data",file)
+    # assumes data files exist in the directory raw_data which is at the same
+    # level as the script
+    csvpath = os.path.join("raw_data", file)
     print(csvpath)
     import csv
     with open(csvpath, newline='') as csvfile:
-        #skip the header row
-        csvfile.readline()
+        
 
         # CSV reader specifies delimiter and variable that holds contents
         csvreader = csv.reader(csvfile, delimiter=',')
 
+        #skip the header row
+        next(csvreader)
         #  Each row is read as a row
         for row in csvreader:
+            
             #increment total votes
             totalVotes = totalVotes+1
             candidate = row[2]
@@ -71,39 +73,41 @@ for file in dataFileList:
                 #increase vote tally for this candidate by 1
                 voteCountList[indexofCandidate] = curVoteTally+1
             
-#output file to hold results            
-outputpath = os.path.join("raw_data","pollResults.txt")
-
-resultsfile = open(outputpath, "w")
-
-lines = []
-
-#Create output to write
-lines.append("Election Results")
-lines.append("-------------------------")
-lines.append("Total Votes: "+str(totalVotes))
-lines.append("-------------------------")
-
-
-#initialize winner vote count
-winningVotes = 0
-for candidate in candidateList:
-    votes = voteCountList[candidateList.index(candidate)]
-    pctVotes = (votes/totalVotes)*100
-    #check if vote count greater than current leader vote count and assign leader position and leader vote count
-    # if yes
-    if votes > winningVotes:
-        winner = candidate
-        winningVotes = votes
-    lines.append(candidate+": "+str(round(pctVotes,2))+"% "+"("+str(votes) +")")
-lines.append("-------------------------")
-lines.append("Winner: "+winner)
-
- ##Write the output to file and console
-for line in lines:
-    print(line)
-    print(line,file=resultsfile)
+        #output file to hold results            
+        outputpath = os.path.join("raw_data","pollResults_"+file.split(".")[0]+".txt")
         
-#close the output file
-resultsfile.close()  
+        resultsfile = open(outputpath, "w")
+        
+        lines = []
+        
+        #Create output to write
+        lines.append("Election Results")
+        lines.append("-------------------------")
+        lines.append("Total Votes: "+str(totalVotes))
+        lines.append("-------------------------")
+        
+        
+        #initialize winner vote count
+        winningVotes = 0
+        for candidate in candidateList:
+            votes = voteCountList[candidateList.index(candidate)]
+            pctVotes = (votes/totalVotes)*100
+            #check if vote count greater than current leader vote count and assign leader position and leader vote count
+            # if yes
+            if votes > winningVotes:
+                winner = candidate
+                winningVotes = votes
+            lines.append(candidate+": "+str(round(pctVotes,2))+"% "+"("+str(votes) +")")
+        lines.append("-------------------------")
+        lines.append("Winner: "+winner)
+        
+         ##Write the output to file and console
+        for line in lines:
+            print(line)
+            print(line,file=resultsfile)
+        
+        #new line separator
+        print()        
+        #close the output file
+        resultsfile.close()  
 
